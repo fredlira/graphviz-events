@@ -1,0 +1,91 @@
+#pragma execution_character_set( "utf-8" )
+
+#define STR(x) #x
+
+#define BGCOLORNODE BGCOLOR="#E1E1E1"
+#define BGCOLORNODECONCEITO BGCOLOR="yellow"
+
+#define _CONCEITO_GERAL_(TITULO,DESCRICAO) [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="5" BGCOLORNODECONCEITO><TR><TD align="left"><B>CONCEITO</B></TD><TD width="10"></TD><TD align="left"></TD></TR><TR><TD align="left" valign="top">STR(TITULO)</TD><TD></TD><TD align="left">STR(DESCRICAO)</TD></TR></TABLE>>]
+
+#define _CONCEITO_APLICADO_(PAIS_1,TITULO,DESCRICAO) [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="5" BGCOLORNODECONCEITO><TR><TD align="left"></TD><TD width="10"></TD><TD align="left"><IMG SRC=STR(w40/PAIS_1.png)/></TD></TR><TR><TD align="left" valign="top">STR(TITULO)</TD><TD></TD><TD align="left">STR(DESCRICAO)</TD></TR></TABLE>>]
+
+#define _EVENTO_(ANO,PAIS_1,TITULO,DESCRICAO) [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="5" BGCOLORNODE><TR><TD align="left"><B>ANO</B></TD><TD width="10"></TD><TD align="left"><IMG SRC=STR(w40/PAIS_1.png)/></TD></TR><TR><TD align="left" valign="top">STR(TITULO)</TD><TD></TD><TD align="left">STR(DESCRICAO)</TD></TR></TABLE>>]
+
+#define _EVENTO_P2(ANO,PAIS1,PAIS2,TITULO,DESCRICAO) [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="5" BGCOLORNODE><TR><TD align="left"><B>ANO</B></TD><TD width="10"></TD><TD align="left"><IMG SRC=STR(w40/PAIS1.png)/></TD><TD><IMG SRC=STR(w40/PAIS2.png)/></TD></TR><TR><TD align="left" valign="top">STR(TITULO)</TD><TD></TD><TD align="left" colspan="2">STR(DESCRICAO)</TD></TR></TABLE>>]
+
+#define _RELACAO_(X) [label=X]
+
+#define _BR <BR></BR>
+
+digraph G {
+  node [fontname="Helvetica,Arial,sans-serif" shape=record]
+  edge [fontname="Helvetica,Arial,sans-serif"]
+  rankdir=TB;
+
+  C_ESCRAVISMO
+			_CONCEITO_GERAL_(	Escravismo,)
+
+  C_EXPANSAO_MARITMA
+			_CONCEITO_APLICADO_( pt,
+						Expansão Marítima,)
+
+	C_ESCRAVISMO -> C_EXPANSAO_MARITMA				_RELACAO_("   financia")
+  
+  C_ESCRAVISMO_PORTUGUES
+			_CONCEITO_APLICADO_( pt,
+						Escravismo Português,
+						Portugueses recorrem ao comercio de escravizados para <BR></BR>financiar/lucrar com a expansão maritma)
+
+	C_ESCRAVISMO -> C_ESCRAVISMO_PORTUGUES			_RELACAO_("   origina")
+						
+  C_ESCRAVISMO_INDIGENA
+			_CONCEITO_APLICADO_(	pt,
+						Escravismo _BR Indígena,)
+  
+  C_ESCRAVISMO_AFRICANO
+			_CONCEITO_APLICADO_(	pt,
+						Escravismo _BR de Povos Africanos,)
+
+	C_ESCRAVISMO_PORTUGUES -> C_ESCRAVISMO_INDIGENA
+	C_ESCRAVISMO_PORTUGUES -> C_ESCRAVISMO_AFRICANO
+
+  C_GENOCIDIO_INDIGENA
+			_CONCEITO_APLICADO_( 	ptbr,
+							Genocídio Indígena,
+							Processo de eliminação gradual _BR da identidade indígena)
+	
+	C_ESCRAVISMO_INDIGENA -> C_GENOCIDIO_INDIGENA	_RELACAO_("   influencia")
+  
+  E_1500_PORTUGUESES_AMERICA
+			_EVENTO_(	1500,
+						ptbr,
+						Invasão da América,
+						Chegada dos primeiros exploradores _BR europeus no território sulamericano)
+  
+  E_1543_PORTUGUESES_JAPAO
+			_EVENTO_( 	1543,
+						ptjp,
+						Início da relação<BR></BR> comercial com Japoneses,
+						Portugueses chegam a ilha de Tanegashima <BR></BR> no sul do Japão)
+						
+	C_EXPANSAO_MARITMA -> E_1500_PORTUGUESES_AMERICA		_RELACAO_("   causa")
+	C_EXPANSAO_MARITMA -> E_1543_PORTUGUESES_JAPAO			_RELACAO_("   causa")
+
+	C_ESCRAVISMO_PORTUGUES -> E_1500_PORTUGUESES_AMERICA	_RELACAO_("   influencia")
+	C_ESCRAVISMO_PORTUGUES -> E_1543_PORTUGUESES_JAPAO		_RELACAO_("   influencia")
+
+  E_1821_MUDANCA_CORTE
+			_EVENTO_(	1821,
+						ptbr,
+						Mudança da Corte<BR></BR>Portuguesa,
+						Monarquia portuguesa migra de<BR></BR> Lisboa para o Rio de Janeiro.)
+
+  E_1889_GOLPE_REPUBLICA
+			_EVENTO_(	1889,
+						br,
+						Golpe da República,
+						Dom Pedro II é removido do poder por uma associação<BR></BR> entre militares golpistas e a burguesia escravocrata.)
+  
+	E_1821_MUDANCA_CORTE -> E_1889_GOLPE_REPUBLICA 			_RELACAO_("   causa")
+}
+ 
