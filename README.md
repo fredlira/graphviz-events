@@ -9,9 +9,9 @@ Uma aplicação do graphviz e do pré-compilador do cpp para visualização veto
 
 ## system tools
 
-sudo apt install imagemagick
-sudo apt install gcc
-sudo apt install graphviz
+1. sudo apt install imagemagick
+2. sudo apt install gcc
+3. sudo apt install graphviz
 
 ## script data 
 
