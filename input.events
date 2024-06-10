@@ -21,6 +21,7 @@ digraph G {
   node [fontname="Helvetica,Arial,sans-serif" shape=record]
   edge [fontname="Helvetica,Arial,sans-serif"]
   rankdir=TB;
+/*  newrank=true; */
 
   C_ESCRAVISMO
 			_CONCEITO_GERAL_(	Escravismo,)
@@ -61,7 +62,12 @@ digraph G {
 						ptbr,
 						Invasão da América,
 						Chegada dos primeiros exploradores _BR europeus no território sulamericano)
-  
+
+/*
+  rank=same	ANO_1500;	E_1500_PORTUGUESES_AMERICA;  
+  rank=same	ANO_1543;	E_1543_PORTUGUESES_JAPAO;
+*/  
+ 
   E_1543_PORTUGUESES_JAPAO
 			_EVENTO_( 	1543,
 						ptjp,
@@ -74,18 +80,55 @@ digraph G {
 	C_ESCRAVISMO_PORTUGUES -> E_1500_PORTUGUESES_AMERICA	_RELACAO_("   influencia")
 	C_ESCRAVISMO_PORTUGUES -> E_1543_PORTUGUESES_JAPAO		_RELACAO_("   influencia")
 
-  E_1821_MUDANCA_CORTE
-			_EVENTO_(	1821,
+	C_ABSOLUTISMO
+			_CONCEITO_GERAL_(	Absolutismo,)
+
+	C_ABSOLUTISMO -> E_CRISE_ABSOLUTISMO					_RELACAO_("   resulta")
+
+	C_LIBERALISMO
+			_CONCEITO_GERAL_(	Liberalismo,)
+
+	E_1789_REVOLUCAO_FRANCESA
+			_EVENTO_(	1789,
+						fr,
+						Revolução Francesa,)
+
+	C_LIBERALISMO -> E_1789_REVOLUCAO_FRANCESA				_RELACAO_("   influencia")
+	C_LIBERALISMO -> E_INDEPENDENCIA_AMERICANA				_RELACAO_("   influencia")
+	C_LIBERALISMO -> E_REVOLUCAO_BURGUESA_PORTUGAL			_RELACAO_("   influencia")
+
+	E_CRISE_ABSOLUTISMO -> E_1789_REVOLUCAO_FRANCESA		_RELACAO_("   influencia")
+
+	E_1807_NAPOLEAO_INVADE_PORTUGAL
+			_EVENTO_(	1807,
+						fr,
+						Franceses ameaçam<BR></BR> invadir Lisboa,
+						Tropas francesas se organizam<BR></BR> para entrar no território português)
+
+	E_1789_REVOLUCAO_FRANCESA -> E_1807_NAPOLEAO_INVADE_PORTUGAL	_RELACAO_("   precede")
+	
+	E_1807_MUDANCA_CORTE
+			_EVENTO_(	1807,
 						ptbr,
 						Mudança da Corte<BR></BR>Portuguesa,
 						Monarquia portuguesa migra de<BR></BR> Lisboa para o Rio de Janeiro.)
+	
+	E_1807_NAPOLEAO_INVADE_PORTUGAL -> E_1807_MUDANCA_CORTE			_RELACAO_("   causa");
 
-  E_1889_GOLPE_REPUBLICA
+	E_1821_DOM_PEDRO_I_RETORNA
+			_EVENTO_(	1821,
+						ptbr,
+						Dom Pedro I decide retornar para Lisboa,
+						-)
+
+	E_REVOLUCAO_BURGUESA_PORTUGAL -> E_1821_DOM_PEDRO_I_RETORNA		_RELACAO_("   causa");
+
+	E_1889_GOLPE_REPUBLICA
 			_EVENTO_(	1889,
 						br,
 						Golpe da República,
 						Dom Pedro II é removido do poder por uma associação<BR></BR> entre militares golpistas e a burguesia escravocrata.)
   
-	E_1821_MUDANCA_CORTE -> E_1889_GOLPE_REPUBLICA 			_RELACAO_("   causa")
+	E_1807_MUDANCA_CORTE -> E_1889_GOLPE_REPUBLICA 			_RELACAO_("   causa")
 }
  
