@@ -1,4 +1,5 @@
 # graphviz-events
+
 Uma aplicação do graphviz e do pré-compilador do cpp para visualização vetorial de eventos históricos
 
 ## overview
@@ -13,13 +14,15 @@ Uma aplicação do graphviz e do pré-compilador do cpp para visualização veto
 2. sudo apt install gcc
 3. sudo apt install graphviz
 
+* if got errors, try to update/upgrade apt - (sudo apt update, sudo apt upgrade) 
+
 ## script data 
 
 nano/vim graph1.gv
 
 ## compiling data (graph1.gv) with gcc/graphviz to vetorial image format (graph.svg)
 
-dot -Tsvg <(cpp graph1.gv) > graph.svg
+dot -Tsvg <(cpp input.dot) > output.svg
 
 ## if needed, you can compose dual flags using convert command (imagemagick)
 

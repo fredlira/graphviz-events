@@ -56,6 +56,8 @@ digraph G {
 	
 	C_ESCRAVISMO_INDIGENA -> C_GENOCIDIO_INDIGENA	_RELACAO_("   influencia")
   
+	rank=same;   1500 E_1500_PORTUGUESES_AMERICA; }
+  
   E_1500_PORTUGUESES_AMERICA
 			_EVENTO_(	1500,
 						ptbr,
