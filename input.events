@@ -3,15 +3,22 @@
 #define STR(x) #x
 
 #define BGCOLORNODE BGCOLOR="#E1E1E1"
+#define BGCOLORND_GUERRA BGCOLOR="#FAA0A0"
 #define BGCOLORNODECONCEITO BGCOLOR="yellow"
 
 #define _CONCEITO_GERAL_(TITULO,DESCRICAO) [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="5" BGCOLORNODECONCEITO><TR><TD align="left"><B>CONCEITO</B></TD><TD width="10"></TD><TD align="left"></TD></TR><TR><TD align="left" valign="top">STR(TITULO)</TD><TD></TD><TD align="left">STR(DESCRICAO)</TD></TR></TABLE>>]
 
 #define _CONCEITO_APLICADO_(PAIS_1,TITULO,DESCRICAO) [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="5" BGCOLORNODECONCEITO><TR><TD align="left"></TD><TD width="10"></TD><TD align="left"><IMG SRC=STR(w40/PAIS_1.png)/></TD></TR><TR><TD align="left" valign="top">STR(TITULO)</TD><TD></TD><TD align="left">STR(DESCRICAO)</TD></TR></TABLE>>]
 
+#define _EVENTO_GERAL_(ANO,TITULO,DESCRICAO) [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="5" BGCOLORNODE><TR><TD align="left"><B>ANO</B></TD><TD width="10"></TD><TD align="left"></TD></TR><TR><TD align="left" valign="top">STR(TITULO)</TD><TD></TD><TD align="left">STR(DESCRICAO)</TD></TR></TABLE>>]
+
 #define _EVENTO_(ANO,PAIS_1,TITULO,DESCRICAO) [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="5" BGCOLORNODE><TR><TD align="left"><B>ANO</B></TD><TD width="10"></TD><TD align="left"><IMG SRC=STR(w40/PAIS_1.png)/></TD></TR><TR><TD align="left" valign="top">STR(TITULO)</TD><TD></TD><TD align="left">STR(DESCRICAO)</TD></TR></TABLE>>]
 
 #define _EVENTO_P2(ANO,PAIS1,PAIS2,TITULO,DESCRICAO) [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="5" BGCOLORNODE><TR><TD align="left"><B>ANO</B></TD><TD width="10"></TD><TD align="left"><IMG SRC=STR(w40/PAIS1.png)/></TD><TD><IMG SRC=STR(w40/PAIS2.png)/></TD></TR><TR><TD align="left" valign="top">STR(TITULO)</TD><TD></TD><TD align="left" colspan="2">STR(DESCRICAO)</TD></TR></TABLE>>]
+
+#define _EVENTO_GUERRA_(ANO,PAIS_1,TITULO,DESCRICAO) [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="5" BGCOLORND_GUERRA><TR><TD align="left"><B>ANO</B></TD><TD width="10"></TD><TD align="left"><IMG SRC=STR(w40/PAIS_1.png)/></TD></TR><TR><TD align="left" valign="top">STR(TITULO)</TD><TD></TD><TD align="left">STR(DESCRICAO)</TD></TR></TABLE>>]
+
+#define _EVENTO_GUERRA_P2_(ANO,PAIS1,PAIS2,TITULO,DESCRICAO) [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="5" BGCOLORND_GUERRA><TR><TD align="left"><B>ANO</B></TD><TD width="10"></TD><TD align="left"><IMG SRC=STR(w40/PAIS1.png)/></TD><TD><IMG SRC=STR(w40/PAIS2.png)/></TD></TR><TR><TD align="left" valign="top">STR(TITULO)</TD><TD></TD><TD align="left" colspan="2">STR(DESCRICAO)</TD></TR></TABLE>>]
 
 #define _RELACAO_(X) [label=X]
 
@@ -21,18 +28,33 @@ digraph G {
   node [fontname="Helvetica,Arial,sans-serif" shape=record]
   edge [fontname="Helvetica,Arial,sans-serif"]
   rankdir=TB;
+/*  newrank=true; */
 
-  C_ESCRAVISMO
-			_CONCEITO_GERAL_(	Escravismo,)
+	C_MERCANTILISMO
+		_CONCEITO_GERAL_(	Mercantilismo,)
 
-  C_EXPANSAO_MARITMA
-			_CONCEITO_APLICADO_( pt,
+	C_COLONIALISMO
+		_CONCEITO_GERAL_(	Colonialismo,)
+		
+	C_RACISMO
+		_CONCEITO_GERAL_(   Racismo,)
+
+	C_ESCRAVISMO
+		_CONCEITO_GERAL_(	Escravismo,)
+
+	C_EXPANSAO_MARITMA
+		_CONCEITO_APLICADO_( pt,
 						Expansão Marítima,)
 
+	C_MERCANTILISMO -> C_COLONIALISMO				_RELACAO_("   produz")
+	C_COLONIALISMO -> C_EXPANSAO_MARITMA			_RELACAO_("   utiliza-se da")
+
+	C_RACISMO -> C_ESCRAVISMO						_RELACAO_("   produz")
+	C_RACISMO -> C_COLONIALISMO						_RELACAO_("   fundamenta")
 	C_ESCRAVISMO -> C_EXPANSAO_MARITMA				_RELACAO_("   financia")
   
-  C_ESCRAVISMO_PORTUGUES
-			_CONCEITO_APLICADO_( pt,
+	C_ESCRAVISMO_PORTUGUES
+		_CONCEITO_APLICADO_( pt,
 						Escravismo Português,
 						Portugueses recorrem ao comercio de escravizados para <BR></BR>financiar/lucrar com a expansão maritma)
 
@@ -57,7 +79,7 @@ digraph G {
 	C_ESCRAVISMO_INDIGENA -> C_GENOCIDIO_INDIGENA	_RELACAO_("   influencia")
   
 	rank=same;   1500 E_1500_PORTUGUESES_AMERICA; }
-  
+
   E_1500_PORTUGUESES_AMERICA
 			_EVENTO_(	1500,
 						ptbr,
@@ -69,6 +91,7 @@ digraph G {
 						ptjp,
 						Início da relação<BR></BR> comercial com Japoneses,
 						Portugueses chegam a ilha de Tanegashima <BR></BR> no sul do Japão)
+	C_COLONIALISMO -> E_1500_PORTUGUESES_AMERICA			_RELACAO_("   influencia")
 						
 	C_EXPANSAO_MARITMA -> E_1500_PORTUGUESES_AMERICA		_RELACAO_("   causa")
 	C_EXPANSAO_MARITMA -> E_1543_PORTUGUESES_JAPAO			_RELACAO_("   causa")
@@ -76,18 +99,106 @@ digraph G {
 	C_ESCRAVISMO_PORTUGUES -> E_1500_PORTUGUESES_AMERICA	_RELACAO_("   influencia")
 	C_ESCRAVISMO_PORTUGUES -> E_1543_PORTUGUESES_JAPAO		_RELACAO_("   influencia")
 
-  E_1821_MUDANCA_CORTE
-			_EVENTO_(	1821,
+	C_ABSOLUTISMO
+			_CONCEITO_GERAL_(	Absolutismo,)
+
+	C_ABSOLUTISMO -> E_CRISE_ABSOLUTISMO					_RELACAO_("   resulta")
+	C_ABSOLUTISMO -> E_SANTA_ALIANCA						_RELACAO_("   produz")
+
+	C_LIBERALISMO
+			_CONCEITO_GERAL_(	Liberalismo,)
+
+	E_1789_REVOLUCAO_FRANCESA
+			_EVENTO_(	1789,
+						fr,
+						Revolução Francesa,)
+
+	C_LIBERALISMO -> E_1789_REVOLUCAO_FRANCESA				_RELACAO_("   influencia")
+	C_LIBERALISMO -> E_INDEPENDENCIA_AMERICANA				_RELACAO_("   influencia")
+	C_LIBERALISMO -> E_REVOLUCAO_BURGUESA_PORTUGAL			_RELACAO_("   influencia")
+	
+	C_LIBERALISMO -> E_NEOLIBERALISMO
+	C_LIBERALISMO -> C_FASCISMO
+	C_LIBERALISMO -> C_DEMOCRACIA_LIBERAL
+
+	E_CRISE_ABSOLUTISMO -> E_1789_REVOLUCAO_FRANCESA		_RELACAO_("   influencia")
+	
+	E_1789_REVOLUCAO_FRANCESA -> E_SANTA_ALIANCA			_RELACAO_("   gerou")
+	
+	E_SANTA_ALIANCA -> E_ANTIGO_REGIME						_RELACAO_("   relaciona-se")
+	
+	E_SANTA_ALIANCA -> E_CRISE_ANTIGO_REGIME				_RELACAO_("   precede")
+
+	E_1807_NAPOLEAO_INVADE_PORTUGAL
+			_EVENTO_(	1807,
+						fr,
+						Franceses ameaçam<BR></BR> invadir Lisboa,
+						Tropas francesas se organizam<BR></BR> para entrar no território português)
+
+	E_1789_REVOLUCAO_FRANCESA -> E_1807_NAPOLEAO_INVADE_PORTUGAL	_RELACAO_("   precede")
+	
+	E_1807_MUDANCA_CORTE
+			_EVENTO_(	1807,
 						ptbr,
 						Mudança da Corte<BR></BR>Portuguesa,
 						Monarquia portuguesa migra de<BR></BR> Lisboa para o Rio de Janeiro.)
+	
+	E_1807_NAPOLEAO_INVADE_PORTUGAL -> E_1807_MUDANCA_CORTE			_RELACAO_("   causa");
 
-  E_1889_GOLPE_REPUBLICA
+	E_1821_DOM_PEDRO_I_RETORNA
+			_EVENTO_(	1821,
+						ptbr,
+						Dom Pedro I decide retornar para Lisboa,
+						-)
+
+	E_REVOLUCAO_BURGUESA_PORTUGAL -> E_1821_DOM_PEDRO_I_RETORNA		_RELACAO_("   causa");
+
+	E_1889_GOLPE_REPUBLICA
 			_EVENTO_(	1889,
 						br,
 						Golpe da República,
 						Dom Pedro II é removido do poder por uma associação<BR></BR> entre militares golpistas e a burguesia escravocrata.)
   
-	E_1821_MUDANCA_CORTE -> E_1889_GOLPE_REPUBLICA 			_RELACAO_("   causa")
-}
+
+	E_1807_MUDANCA_CORTE -> E_1889_GOLPE_REPUBLICA 			_RELACAO_("   causa")
+	
+	C_RACISMO -> C_NAZISMO
+	
+	E_1914_1918_PRIMEIRA_GUERRA
+			_EVENTO_GUERRA_(	1914-1918,
+								us,
+								Primeira Guerra Mundial,)
+								
+	E_1939_1945_SEGUNDA_GUERRA
+			_EVENTO_GUERRA_(	1939-1945,
+								us,
+								Segunda Guerra Mundial,)
+
+	C_NEOCOLONIALISMO
+			_CONCEITO_GERAL_(	Neocolonialismo,)
+					
+	E_ANTIGO_REGIME -> C_NEOCOLONIALISMO						_RELACAO_("   promove")
+			
+	E_DISPUTAS_TERRITORIAIS_AFRICA
+			_EVENTO_GERAL_(	-,
+						Disputas territoriais na África,)
+						
+	C_NEOCOLONIALISMO -> E_DISPUTAS_TERRITORIAIS_AFRICA			_RELACAO_("   origina")
+	
+	E_DISPUTAS_TERRITORIAIS_AFRICA -> E_CRISE_ANTIGO_REGIME		_RELACAO_("   influencia")
+			
+	C_COLONIALISMO -> C_NEOCOLONIALISMO							_RELACAO_("   origina")
+	
+	C_NEOCOLONIALISMO -> E_1914_1918_PRIMEIRA_GUERRA			_RELACAO_("   influencia")
+	
+	E_CRISE_ANTIGO_REGIME -> E_1914_1918_PRIMEIRA_GUERRA		_RELACAO_("   influencia")
+	
+	E_1914_1918_PRIMEIRA_GUERRA -> E_1939_1945_SEGUNDA_GUERRA	_RELACAO_("   precede")
+	
+	E_1939_1945_SEGUNDA_GUERRA -> E_1946_CARTA_NACOES_UNIDAS
+	
+	E_1939_1945_SEGUNDA_GUERRA -> E_GUERRA_FRIA
+	
+	E_1946_CARTA_NACOES_UNIDAS -> E_1947_CRIACAO_ONU
+	
  
